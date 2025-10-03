@@ -36,7 +36,7 @@ const StatsSection = () => {
       <img
         src="/Images/Home/Banner/water.jpg"
         alt="water background"
-        className="absolute inset-0 w-full h-full object-cover opacity-63 z-0"
+        className="absolute inset-0 w-full h-full object-cover opacity-65 z-0"
       />
 
       {/* Heading */}
