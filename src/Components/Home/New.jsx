@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaChartBar, FaWater, FaIndustry } from "react-icons/fa";
+import { FaChartBar, FaWater, FaIndustry, FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import { MdOutlineAnalytics, MdOutlineWater } from "react-icons/md";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import "swiper/css/autoplay";
 
 const slides = [
   {
@@ -57,7 +58,7 @@ const serviceIcons = {
   "Water audits": <FaIndustry />,
 };
 
-const BannerCarousel = () => {
+const New = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const containerVariants = {
@@ -90,7 +91,14 @@ const BannerCarousel = () => {
         loop
         autoplay={{ delay: 4000, disableOnInteraction: false }}
         speed={1200}
-        pagination={{ clickable: true }}
+        pagination={{
+          clickable: true,
+          el: ".custom-pagination",
+        }}
+        navigation={{
+          nextEl: ".custom-next",
+          prevEl: ".custom-prev",
+        }}
         onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         className="h-full"
       >
@@ -102,7 +110,9 @@ const BannerCarousel = () => {
                 {/* Background animation */}
                 <motion.div
                   className="w-full h-full bg-gradient-to-r from-cyan-800 via-slate-900 to-teal-800"
-                  animate={{ backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"] }}
+                  animate={{
+                    backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                  }}
                   transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
                   style={{ backgroundSize: "200% 200%" }}
                 />
@@ -193,7 +203,7 @@ const BannerCarousel = () => {
               <div className="relative w-full h-full">
                 {/* Desktop layout (split panel) */}
                 <div className="hidden md:flex w-full h-full">
-                  {/* Left Gradient Panel (25%) */}
+                  {/* Left Gradient Panel */}
                   <motion.div
                     className="w-1/4 h-full bg-gradient-to-br from-cyan-800 via-slate-900 to-teal-800 flex flex-col justify-center items-center px-6 sm:px-8 text-center"
                     initial={{ opacity: 0, x: -50 }}
@@ -225,7 +235,7 @@ const BannerCarousel = () => {
                     </motion.div>
                   </motion.div>
 
-                  {/* Right Image (75%) */}
+                  {/* Right Image */}
                   <motion.div
                     className="w-3/4 h-full relative"
                     initial={{ opacity: 0 }}
@@ -241,7 +251,7 @@ const BannerCarousel = () => {
                   </motion.div>
                 </div>
 
-                {/* Mobile layout (same as first slide style) */}
+                {/* Mobile layout */}
                 <div className="flex md:hidden absolute inset-0 items-center justify-center text-center px-4">
                   <img
                     src={slide.img}
@@ -278,8 +288,24 @@ const BannerCarousel = () => {
           </SwiperSlide>
         ))}
       </Swiper>
+
+      {/* Custom Navigation + Pagination */}
+      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 flex items-center gap-4 z-20">
+        {/* Prev Button */}
+        <button className="custom-prev bg-white/15 hover:bg-cyan-500/40 backdrop-blur-md text-white p-3 rounded-full transition-all shadow-md hover:scale-105">
+          <FaChevronLeft size={20} />
+        </button>
+
+        {/* Pagination Dots */}
+        <div className="custom-pagination flex justify-center items-center gap-2"></div>
+
+        {/* Next Button */}
+        <button className="custom-next bg-white/15 hover:bg-cyan-500/40 backdrop-blur-md text-white p-3 rounded-full transition-all shadow-md hover:scale-105">
+          <FaChevronRight size={20} />
+        </button>
+      </div>
     </div>
   );
 };
 
-export default BannerCarousel;
+export default New;

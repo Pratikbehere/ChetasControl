@@ -1,1 +1,14 @@
+.custom-pagination .swiper-pagination-bullet {
+  background: rgba(255, 255, 255, 0.5);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.custom-pagination .swiper-pagination-bullet-active {
+  background: #22d3ee;
+  box-shadow: 0 0 10px #22d3ee;
+  transform: scale(1.3);
+}
 

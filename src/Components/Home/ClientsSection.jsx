@@ -16,7 +16,8 @@ const clients = [
 ];
 
 const ClientsSection = () => {
-  const marqueeClients = [...clients, ...clients]; // duplicate for smooth loop
+  // ✅ Duplicate twice for smooth infinite scroll (beginning & end overlap)
+  const marqueeClients = [...clients, ...clients, ...clients];
 
   return (
     <section className="relative w-full py-5 overflow-hidden bg-sky-100 font-['Roboto']">
@@ -30,21 +31,24 @@ const ClientsSection = () => {
         </p>
       </div>
 
-      {/* Marquee */}
+      {/* Marquee Container */}
       <div className="relative w-full overflow-hidden">
         <motion.div
           className="flex gap-4 sm:gap-6 md:gap-8"
-          animate={{ x: ["0%", "-50%"] }}
-          transition={{ repeat: Infinity, duration: 13, ease: "linear" }}
+          animate={{ x: ["0%", "-100%"] }}
+          transition={{
+            repeat: Infinity,
+            duration: 30, // ⏱ slower & smoother
+            ease: "linear",
+          }}
         >
           {marqueeClients.map((client, idx) => (
             <div
               key={idx}
               className="flex flex-shrink-0 w-[250px] sm:w-[300px] md:w-[350px] bg-gradient-to-br from-white/90 to-sky-50 rounded-3xl p-4 sm:p-6 md:p-6 shadow-lg border-2 border-blue-400/70"
             >
-              {/* Inner content scales on hover */}
               <div className="flex items-center gap-4 w-full transform transition-transform duration-300 hover:scale-105">
-                {/* Client Logo */}
+                {/* Logo */}
                 <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-white/10 rounded-lg overflow-hidden flex-shrink-0 flex items-center justify-center">
                   <img
                     src={client.image}
@@ -53,7 +57,7 @@ const ClientsSection = () => {
                   />
                 </div>
 
-                {/* Name & Review */}
+                {/* Text */}
                 <div className="flex flex-col">
                   <h3 className="text-black text-sm sm:text-base md:text-lg font-bold mb-1 drop-shadow-md">
                     {client.name}

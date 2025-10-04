@@ -42,7 +42,7 @@ export default function Navbar() {
             <li key={idx}>
               <Link
                 to={item.path}
-                className={`relative text-black text-lg font-medium tracking-wide group ${
+                className={`relative text-black text-xl font-medium tracking-wide group ${
                   location.pathname === item.path ? "font-semibold" : ""
                 }`}
               >
