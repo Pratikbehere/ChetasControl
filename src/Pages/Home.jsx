@@ -4,22 +4,18 @@ import Animation from "../Components/Home/Animation";
 import New from "../Components/Home/New";
 import StatsSection from "../Components/Home/StatsSection";
 import ClientsSection from "../Components/Home/ClientsSection";
+import LoadingDots from "../Components/Reuse/LoadingDots"; // import it here
 
 const Home = () => {
   const [showIntro, setShowIntro] = useState(false);
   const [showContent, setShowContent] = useState(false);
+  const [pageLoaded, setPageLoaded] = useState(false);
 
-  // Ref ensures animation runs only once per page load
   const animationStarted = useRef(false);
 
-  // Wait until page is fully loaded
+  // Wait until full page load
   useEffect(() => {
-    const handleLoad = () => {
-      if (!animationStarted.current) {
-        animationStarted.current = true; // mark as started
-        setShowIntro(true);
-      }
-    };
+    const handleLoad = () => setPageLoaded(true);
 
     if (document.readyState === "complete") {
       handleLoad();
@@ -30,23 +26,44 @@ const Home = () => {
     return () => window.removeEventListener("load", handleLoad);
   }, []);
 
+  // Start animation once
+  useEffect(() => {
+    if (!animationStarted.current) {
+      animationStarted.current = true;
+      setShowIntro(true);
+    }
+  }, []);
+
   const handleAnimationComplete = () => {
     setShowIntro(false);
-    setShowContent(true);
+    if (pageLoaded) setShowContent(true);
   };
 
-  return (
-    <div className="relative w-full min-h-screen">
-      {/* Animation only once */}
-      {showIntro && <Animation onComplete={handleAnimationComplete} />}
+  useEffect(() => {
+    if (pageLoaded && !showIntro) {
+      setShowContent(true);
+    }
+  }, [pageLoaded, showIntro]);
 
-      {/* Main content mounts after animation finishes */}
+  return (
+    <div className="relative w-full min-h-screen flex flex-col items-center justify-center bg-black text-white">
+      {/* Animation */}
+      {showIntro && (
+        <div className="flex flex-col items-center justify-center">
+          <Animation onComplete={handleAnimationComplete} />
+        </div>
+      )}
+
+      {/* Loading dots while animation finished but page still loading */}
+      {!showIntro && !showContent && !pageLoaded && <LoadingDots />}
+
+      {/* Main content */}
       {showContent && (
         <motion.div
           initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
-          className="relative z-0"
+          className="relative z-0 w-full"
         >
           <New />
           <StatsSection />
