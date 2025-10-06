@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Animation from "../Components/Home/Animation";
 import New from "../Components/Home/New";
@@ -8,32 +8,27 @@ import ClientsSection from "../Components/Home/ClientsSection";
 const Home = () => {
   const [showIntro, setShowIntro] = useState(false);
   const [showContent, setShowContent] = useState(false);
-  const [isPageLoaded, setIsPageLoaded] = useState(false);
 
+  // Ref ensures animation runs only once per page load
+  const animationStarted = useRef(false);
+
+  // Wait until page is fully loaded
   useEffect(() => {
-    // Wait for the full page to load (all assets)
-    const handlePageLoad = () => setIsPageLoaded(true);
+    const handleLoad = () => {
+      if (!animationStarted.current) {
+        animationStarted.current = true; // mark as started
+        setShowIntro(true);
+      }
+    };
 
     if (document.readyState === "complete") {
-      handlePageLoad();
+      handleLoad();
     } else {
-      window.addEventListener("load", handlePageLoad);
+      window.addEventListener("load", handleLoad);
     }
 
-    return () => window.removeEventListener("load", handlePageLoad);
+    return () => window.removeEventListener("load", handleLoad);
   }, []);
-
-  useEffect(() => {
-    if (isPageLoaded) {
-      const hasSeenIntro = sessionStorage.getItem("seenIntro");
-      if (!hasSeenIntro) {
-        setShowIntro(true);
-        sessionStorage.setItem("seenIntro", "true");
-      } else {
-        setShowContent(true);
-      }
-    }
-  }, [isPageLoaded]);
 
   const handleAnimationComplete = () => {
     setShowIntro(false);
@@ -42,7 +37,7 @@ const Home = () => {
 
   return (
     <div className="relative w-full min-h-screen">
-      {/* Animation only after full page load */}
+      {/* Animation only once */}
       {showIntro && <Animation onComplete={handleAnimationComplete} />}
 
       {/* Main content mounts after animation finishes */}
