@@ -1,69 +1,67 @@
-import React, { useState, useEffect, useRef } from "react";
+// import React from "react";
+// import BannerCarousel from "../Components/Home/BannerCarousel";
+// import StatsSection from "../Components/Home/StatsSection";
+// import ClientsSection from "../Components/Home/ClientsSection";
+// import Test from "../Components/Home/Test"
+// import New from "../Components/Home/New"
+// import ParticleIntro from "../Components/Home/ParticleIntro";
+// const Home = () => {
+//     return (
+//         <div className="w-full">
+
+//             {/* <BannerCarousel /> */}
+//             {/* <Test/> */}
+//             <New/>
+//             <StatsSection />
+//             <ClientsSection/>
+
+//             <div className="mt-5">
+
+//             </div>
+//         </div>
+//     );
+// };
+
+// export default Home;
+// -----------------------------------------------------------------
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Animation from "../Components/Home/Animation";
 import New from "../Components/Home/New";
 import StatsSection from "../Components/Home/StatsSection";
 import ClientsSection from "../Components/Home/ClientsSection";
-import LoadingDots from "../Components/Reuse/LoadingDots"; // import it here
 
 const Home = () => {
-  const [showIntro, setShowIntro] = useState(false);
   const [showContent, setShowContent] = useState(false);
-  const [pageLoaded, setPageLoaded] = useState(false);
+  const [showIntro, setShowIntro] = useState(false);
 
-  const animationStarted = useRef(false);
-
-  // Wait until full page load
   useEffect(() => {
-    const handleLoad = () => setPageLoaded(true);
+    // Check if the intro has already been seen
+    const hasSeenIntro = sessionStorage.getItem("seenIntro");
 
-    if (document.readyState === "complete") {
-      handleLoad();
-    } else {
-      window.addEventListener("load", handleLoad);
-    }
-
-    return () => window.removeEventListener("load", handleLoad);
-  }, []);
-
-  // Start animation once
-  useEffect(() => {
-    if (!animationStarted.current) {
-      animationStarted.current = true;
+    if (!hasSeenIntro) {
       setShowIntro(true);
+      sessionStorage.setItem("seenIntro", "true"); // persist flag
+    } else {
+      setShowContent(true); // skip animation
     }
   }, []);
 
   const handleAnimationComplete = () => {
     setShowIntro(false);
-    if (pageLoaded) setShowContent(true);
+    setShowContent(true);
   };
 
-  useEffect(() => {
-    if (pageLoaded && !showIntro) {
-      setShowContent(true);
-    }
-  }, [pageLoaded, showIntro]);
-
   return (
-    <div className="relative w-full min-h-screen flex flex-col items-center justify-center bg-black text-white">
-      {/* Animation */}
-      {showIntro && (
-        <div className="flex flex-col items-center justify-center">
-          <Animation onComplete={handleAnimationComplete} />
-        </div>
-      )}
+    <div className="w-full relative">
+      {showIntro && <Animation onComplete={handleAnimationComplete} />}
 
-      {/* Loading dots while animation finished but page still loading */}
-      {!showIntro && !showContent && !pageLoaded && <LoadingDots />}
-
-      {/* Main content */}
       {showContent && (
         <motion.div
-          initial={{ opacity: 0, y: 25 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, ease: "easeOut" }}
-          className="relative z-0 w-full"
+          className="relative z-0"
         >
           <New />
           <StatsSection />
