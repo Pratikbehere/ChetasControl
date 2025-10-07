@@ -31,25 +31,27 @@ import New from "../Components/Home/New";
 import StatsSection from "../Components/Home/StatsSection";
 import ClientsSection from "../Components/Home/ClientsSection";
 
-const Home = () => {
-  const [showContent, setShowContent] = useState(false);
+const Home = ({ onAnimation }) => {
   const [showIntro, setShowIntro] = useState(false);
+  const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
-    // Check if the intro has already been seen
     const hasSeenIntro = sessionStorage.getItem("seenIntro");
 
     if (!hasSeenIntro) {
       setShowIntro(true);
-      sessionStorage.setItem("seenIntro", "true"); // persist flag
+      onAnimation?.(true); // tell parent: animation running
+      sessionStorage.setItem("seenIntro", "true");
     } else {
-      setShowContent(true); // skip animation
+      setShowContent(true);
+      onAnimation?.(false); // skip animation
     }
-  }, []);
+  }, [onAnimation]);
 
   const handleAnimationComplete = () => {
     setShowIntro(false);
     setShowContent(true);
+    onAnimation?.(false); // animation finished
   };
 
   return (

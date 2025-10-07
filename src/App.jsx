@@ -11,7 +11,6 @@ import About from "./Pages/About";
 import Products from "./Pages/Products";
 import Contact from "./Pages/Contact";
 
-// Simple loader until page fully loaded
 const Loader = () => (
   <motion.div className="fixed inset-0 z-[200] flex items-center justify-center bg-white">
     <motion.div
@@ -24,38 +23,51 @@ const Loader = () => (
 
 function App() {
   const [pageReady, setPageReady] = useState(false);
+  const [animationRunning, setAnimationRunning] = useState(true); // IMPORTANT: start true
+  const [appVisible, setAppVisible] = useState(false);
 
   useEffect(() => {
     const handleLoad = () => setPageReady(true);
 
-    if (document.readyState === "complete") {
-      handleLoad();
-    } else {
-      window.addEventListener("load", handleLoad);
-    }
+    if (document.readyState === "complete") handleLoad();
+    else window.addEventListener("load", handleLoad);
 
     return () => window.removeEventListener("load", handleLoad);
   }, []);
 
+  useEffect(() => {
+    if (pageReady) setAppVisible(true);
+  }, [pageReady]);
+
   return (
     <Router>
-      {/* Loader until page fully loaded */}
       {!pageReady && <Loader />}
 
-      {/* Main App only after page fully loaded */}
-      {pageReady && (
-        <div className="flex flex-col min-h-screen">
-          <Navbar />
+      {appVisible && (
+        <div
+          className="flex flex-col min-h-screen"
+          style={{
+            opacity: appVisible ? 1 : 0,
+            transition: "opacity 0.3s ease-in-out",
+          }}
+        >
+          {/* Hide navbar/footer while animation is running */}
+          {!animationRunning && <Navbar />}
+
           <main className="flex-grow pt-16">
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route
+                path="/"
+                element={<Home onAnimation={setAnimationRunning} />}
+              />
               <Route path="/services" element={<Services />} />
               <Route path="/about" element={<About />} />
               <Route path="/products" element={<Products />} />
               <Route path="/contact" element={<Contact />} />
             </Routes>
           </main>
-          <Footer />
+
+          {!animationRunning && <Footer />}
         </div>
       )}
     </Router>
