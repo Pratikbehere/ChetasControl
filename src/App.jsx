@@ -23,8 +23,7 @@ const Loader = () => (
 
 function App() {
   const [pageReady, setPageReady] = useState(false);
-  const [animationRunning, setAnimationRunning] = useState(true); // IMPORTANT: start true
-  const [appVisible, setAppVisible] = useState(false);
+  const [animationRunning, setAnimationRunning] = useState(false);
 
   useEffect(() => {
     const handleLoad = () => setPageReady(true);
@@ -35,41 +34,30 @@ function App() {
     return () => window.removeEventListener("load", handleLoad);
   }, []);
 
-  useEffect(() => {
-    if (pageReady) setAppVisible(true);
-  }, [pageReady]);
-
   return (
     <Router>
       {!pageReady && <Loader />}
 
-      {appVisible && (
-        <div
-          className="flex flex-col min-h-screen"
-          style={{
-            opacity: appVisible ? 1 : 0,
-            transition: "opacity 0.3s ease-in-out",
-          }}
-        >
-          {/* Hide navbar/footer while animation is running */}
-          {!animationRunning && <Navbar />}
+      {/* App always rendered, appVisible removed */}
+      <div className="flex flex-col min-h-screen">
+        {/* Navbar only hidden if animation is running */}
+        {!animationRunning && <Navbar />}
 
-          <main className="flex-grow pt-16">
-            <Routes>
-              <Route
-                path="/"
-                element={<Home onAnimation={setAnimationRunning} />}
-              />
-              <Route path="/services" element={<Services />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/contact" element={<Contact />} />
-            </Routes>
-          </main>
+        <main className="flex-grow pt-16">
+          <Routes>
+            <Route
+              path="/"
+              element={<Home onAnimation={setAnimationRunning} />}
+            />
+            <Route path="/services" element={<Services />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </main>
 
-          {!animationRunning && <Footer />}
-        </div>
-      )}
+        {!animationRunning && <Footer />}
+      </div>
     </Router>
   );
 }
