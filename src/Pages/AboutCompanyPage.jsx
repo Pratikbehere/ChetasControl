@@ -1,14 +1,14 @@
 import React from "react";
 import AboutCompany from '../Components/AboutCompany/AboutCompany'
 import AboutMD from "../Components/AboutCompany/AboutMD";
-import ChetasTimeline from "../Components/AboutCompany/ChetasTimeline.JSX";
+import ChetasTimeline_Temp from "../Components/AboutCompany/ChetasTimeline_Temp";
 
 const AboutCompanyPage = () => {
   return (
     <>
       <AboutCompany/>
       <AboutMD/>
-      <ChetasTimeline/>
+      <ChetasTimeline_Temp/>
       
     </>
   );

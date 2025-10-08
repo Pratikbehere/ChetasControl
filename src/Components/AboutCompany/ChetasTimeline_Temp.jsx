@@ -66,7 +66,7 @@ const cardVariants = {
   visible: { opacity: 1, y: 0, rotate: 0, transition: { duration: 0.8, type: "spring", stiffness: 60 } },
 };
 
-export default function ChetasTimeline() {
+export default function ChetasTimeline_Temp() {
   const { scrollYProgress } = useViewportScroll();
   const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
