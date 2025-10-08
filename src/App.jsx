@@ -7,9 +7,12 @@ import Footer from "./Components/Reuse/Footer";
 
 import Home from "./Pages/Home";
 import Services from "./Pages/Services";
-import About from "./Pages/About";
+import AboutCompanyPage from "./Pages/AboutCompanyPage";
+import AboutTeamPage from "./Pages/AboutTeamPage";
+import AwardsPage  from "./Pages/AwardsPage";
 import Products from "./Pages/Products";
 import Contact from "./Pages/Contact";
+import ScrollToTop from "./Components/Reuse/ScrollToTop";
 
 const Loader = () => (
   <motion.div className="fixed inset-0 z-[200] flex items-center justify-center bg-white">
@@ -36,6 +39,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop/>
       {!pageReady && <Loader />}
 
       {/* App always rendered, appVisible removed */}
@@ -50,9 +54,12 @@ function App() {
               element={<Home onAnimation={setAnimationRunning} />}
             />
             <Route path="/services" element={<Services />} />
-            <Route path="/about" element={<About />} />
+        
             <Route path="/products" element={<Products />} />
-            <Route path="/contact" element={<Contact />} />
+            <Route path="/aboutCompanyPage" element={<AboutCompanyPage />} />
+            <Route path="/aboutTeamPage" element={<AboutTeamPage />} />
+            <Route path="/awardsPage" element={<AwardsPage />} />
+            <Route path="contact" element={<Contact />} />
           </Routes>
         </main>
 

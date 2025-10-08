@@ -14,7 +14,7 @@ const services = [
 
 export default function ServicesMasonry() {
   return (
-     <div className="w-full p-8 bg-gray-50">
+<div className="w-full bg-gray-50 py-8 px-4 font-roboto">
      
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {services.map((service) => (
@@ -57,7 +57,9 @@ export default function ServicesMasonry() {
 
       {/* Tailwind classes for 3D flip */}
       <style jsx>{`
+      
         .perspective {
+
           perspective: 1000px;
         }
         .transform-style-preserve-3d {
