@@ -34,7 +34,7 @@ const StatsSection = () => {
    <section className="relative w-full py-42 sm:py-48 px-4 sm:px-10 overflow-hidden font-['Roboto']">
       {/* Water background */}
       <img
-        src="/Images/Home/Banner/water.jpg"
+        src="/Images/Home/Banner/water.webp"
         alt="water background"
         className="absolute inset-0 w-full h-full object-cover opacity-50 z-0"
       />
