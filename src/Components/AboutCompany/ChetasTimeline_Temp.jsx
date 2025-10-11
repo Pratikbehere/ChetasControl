@@ -71,9 +71,9 @@ export default function ChetasTimeline_Temp() {
   const scaleY = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
-    <section className="relative bg-gradient-to-b from-gray-100 via-gray-50 to-gray-100 py-16 px-4 sm:px-6 lg:px-12 overflow-hidden font-roboto">
+    <section className="relative bg-gradient-to-b from-gray-100 via-gray-50 to-gray-100 py-16 px-4 sm:px-6 lg:px-12 overflow-hidden ">
       {/* Main heading */}
-      <h2 className="text-4xl font-extrabold text-center text-gray-800 mb-24">
+      <h2 className="font-roboto text-4xl font-extrabold text-center text-gray-800 mb-24">
         Chetas Company Timeline
       </h2>
 

@@ -26,27 +26,27 @@ const slides = [
   {
     name: "Bulk meter",
     desc: "High-accuracy bulk metering solutions built for industrial-grade performance.",
-    img: "/Images/Home/Banner/BulkMeter.jpg",
+    img: "/Images/Home/Banner/BulkMeter.webp",
   },
   {
     name: "Dam automation",
     desc: "Smart monitoring and control systems for intelligent dam automation.",
-    img: "/Images/Home/Banner/DamAutomation.jpeg",
+    img: "/Images/Home/Banner/DamAutomation.webp",
   },
   {
     name: "Flow meters",
     desc: "Reliable flow measurement systems engineered for precision and durability.",
-    img: "/Images/Home/Banner/FlowMeters.jpg",
+    img: "/Images/Home/Banner/FlowMeters.webp",
   },
   {
     name: "Scada",
     desc: "Comprehensive SCADA systems enabling centralized, seamless monitoring and control.",
-    img: "/Images/Home/Banner/Scada.jpg",
+    img: "/Images/Home/Banner/Scada.webp",
   },
   {
     name: "Water audits",
     desc: "Optimizing water usage with intelligent, data-driven audit solutions.",
-    img: "/Images/Home/Banner/WaterAudits.jpg",
+    img: "/Images/Home/Banner/WaterAudits.webp",
   },
 ];
 
